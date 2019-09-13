@@ -14,3 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::middleware(['locale'])->group(function () {
+    Route::resource('posts', 'PostController');
+    Route::resource('postTranslations', 'PostTranslationController');
+
+    Route::get('locale/{locale}', 'PostController@changeLocale')->name('change.locale');
+});

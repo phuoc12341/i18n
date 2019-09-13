@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use App\Models\Post;
+use App\Observers\PostObserver;
+use App\Providers\RepositoryServiceProvider;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +27,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $repoServiceProvider = new RepositoryServiceProvider($this->app);
+        $repoServiceProvider->register();
+
+        Post::observe(PostObserver::class);
     }
 }
